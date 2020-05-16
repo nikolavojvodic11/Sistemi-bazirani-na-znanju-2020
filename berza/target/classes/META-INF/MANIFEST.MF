@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: berza
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: PC
+Implementation-Vendor-Id: com.sbnz
+Build-Jdk: 1.8.0_221
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/berza
+Created-By: Maven Integration for Eclipse
+
