@@ -4,19 +4,19 @@ public class QualityParam {
 	
 	
 	private Long paramID;
-	private String paramName;
 	private String paramDescription;
 	private boolean paramSystem;
+	private String paramCode;
 	
 	public QualityParam() {
 		
 	}
 	
-	public QualityParam(String paramName , String paramDescription , boolean paramSystem)
+	public QualityParam(String paramDescription , boolean paramSystem , String paramCode)
 	{
-		this.paramName = paramName;
 		this.paramDescription = paramDescription;
 		this.paramSystem = paramSystem;
+		this.paramCode = paramCode;
 	}
 
 	public Long getParamID() {
@@ -25,14 +25,6 @@ public class QualityParam {
 
 	public void setParamID(Long paramID) {
 		this.paramID = paramID;
-	}
-
-	public String getParamName() {
-		return paramName;
-	}
-
-	public void setParamName(String paramName) {
-		this.paramName = paramName;
 	}
 
 	public String getParamDescription() {
@@ -49,6 +41,14 @@ public class QualityParam {
 
 	public void setParamSystem(boolean paramSystem) {
 		this.paramSystem = paramSystem;
+	}
+
+	public String getParamCode() {
+		return paramCode;
+	}
+
+	public void setParamCode(String paramCode) {
+		this.paramCode = paramCode;
 	}
 	
 	
