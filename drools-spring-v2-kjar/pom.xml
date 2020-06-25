@@ -3,4 +3,6 @@
   <groupId>com.sbnz</groupId>
   <artifactId>drools-spring-v2-kjar</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <name>Drools Spring Example v2</name>
+  <packaging>jar</packaging>
 </project>

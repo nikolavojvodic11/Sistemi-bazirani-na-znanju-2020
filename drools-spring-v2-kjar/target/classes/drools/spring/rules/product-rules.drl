@@ -12,7 +12,7 @@ import com.sbnz.berza.utils.QualityParamList;
 
 
 
-rule "Psenica (Jedinstvo DOO Apatin)"
+rule "Zitarice"
 	agenda-group "Product"
 	salience 10
 	no-loop true
@@ -21,7 +21,7 @@ rule "Psenica (Jedinstvo DOO Apatin)"
         //conditions
         $var : QualityParamList($param : parametars)
         Number ( $n : intValue >= 3 ) from accumulate(
-				QualityParamDTO( paramCode == "VL = 10" || paramCode == "HM = 79" || paramCode == "SDRZPR = 2" || paramCode == "SEDIM = 3" || paramCode == "CENA = 25" || paramCode == "KOL = 100") from $param,
+				QualityParamDTO( paramCode == "PSENICA" || paramCode == "KUKURUZ" || paramCode == "JECAM" || paramCode == "OVAS" || paramCode == "RAZ") from $param,
 					init ( int count = 0; ),
 					action ( count++; ),
 					result ( count )
@@ -34,12 +34,12 @@ rule "Psenica (Jedinstvo DOO Apatin)"
         }else{
         	ver = $n/6.0*100.0;
         }
-		$var.getMostLikelyProduct().put("PJEDINSTVO", ver);
+		$var.getMostLikelyProduct().put("ZITARICE", ver);
 		update($var);
 
 end
 
-rule "Psenica (Napredak DOO Stara Pazova)"
+rule "Komponente stocne hrane"
    	agenda-group "Product"
 	salience 10
 	no-loop true
@@ -48,7 +48,7 @@ rule "Psenica (Napredak DOO Stara Pazova)"
         //conditions
         $var : QualityParamList($param : parametars)
         Number ( $n : intValue >= 3 ) from accumulate(
-				QualityParamDTO( paramCode == "VL = 13" || paramCode == "HM = 76" || paramCode == "SDRZPR = 5" || paramCode == "SEDIM = 1" || paramCode == "CENA = 25.4" || paramCode == "KOL = 200") from $param,
+				QualityParamDTO( paramCode == "SS" || paramCode == "SUS" || paramCode == "PSB" || paramCode == "SJ" || paramCode == "RB" || paramCode == "LB" || paramCode == "SG") from $param,
 					init ( int count = 0; ),
 					action ( count++; ),
 					result ( count )
@@ -61,13 +61,13 @@ rule "Psenica (Napredak DOO Stara Pazova)"
         }else{
         	ver = $n/6.0*100.0;
         }
-		$var.getMostLikelyProduct().put("PNAPREDAK", ver);
+		$var.getMostLikelyProduct().put("KSH", ver);
 		update($var);
 
 
 end
 
-rule "Psenica (Kozara DOO Banatsko Veliko Selo)"
+rule "Semenska roba"
    	agenda-group "Product"
 	salience 10
 	no-loop true
@@ -76,7 +76,7 @@ rule "Psenica (Kozara DOO Banatsko Veliko Selo)"
         //conditions
         $var : QualityParamList($param : parametars)
         Number ( $n : intValue >= 3 ) from accumulate(
-				QualityParamDTO( paramCode == "VL = 13" || paramCode == "HM = 80" || paramCode == "SDRZPR = 6" || paramCode == "SEDIM = 2" || paramCode == "CENA = 25.5" || paramCode == "KOL = 30") from $param,
+				QualityParamDTO( paramCode == "SP" || paramCode == "SK" || paramCode == "SEJE") from $param,
 					init ( int count = 0; ),
 					action ( count++; ),
 					result ( count )
@@ -89,14 +89,14 @@ rule "Psenica (Kozara DOO Banatsko Veliko Selo)"
         }else{
         	ver = $n/6.0*100.0;
         }
-		$var.getMostLikelyProduct().put("PKOZARA", ver);
+		$var.getMostLikelyProduct().put("SR", ver);
 		update($var);
 
 
 end
 
 
-rule "Kukuruz (Jedinstvo DOO Apatin)"
+rule "Mineralna djubriva"
 	agenda-group "Product"
 	salience 10
 	no-loop true
@@ -105,7 +105,7 @@ rule "Kukuruz (Jedinstvo DOO Apatin)"
         //conditions
         $var : QualityParamList($param : parametars)
         Number ( $n : intValue >= 3 ) from accumulate(
-				QualityParamDTO( paramCode == "VLK = 14" || paramCode == "LOM = 8" || paramCode == "DEFZRN = 1" || paramCode == "NAGZRN = 0.2" || paramCode == "STRPR = 0.1" || paramCode == "CENA = 15.8" || paramCode == "KOL = 1500") from $param,
+				QualityParamDTO( paramCode == "NPK" || paramCode == "AN" || paramCode == "KAN" || paramCode == "UREA") from $param,
 					init ( int count = 0; ),
 					action ( count++; ),
 					result ( count )
@@ -118,12 +118,12 @@ rule "Kukuruz (Jedinstvo DOO Apatin)"
         }else{
         	ver = $n/7.0*100.0;
         }
-		$var.getMostLikelyProduct().put("KJEDINSTVO", ver);
+		$var.getMostLikelyProduct().put("MDJ", ver);
 		update($var);
 
 end
 
-rule "Kukuruz (Napredak DOO Stara Pazova)"
+rule "Industrijsko bilje"
 	agenda-group "Product"
 	salience 10
 	no-loop true
@@ -132,7 +132,7 @@ rule "Kukuruz (Napredak DOO Stara Pazova)"
         //conditions
         $var : QualityParamList($param : parametars)
         Number ( $n : intValue >= 3 ) from accumulate(
-				QualityParamDTO( paramCode == "VLK = 11" || paramCode == "LOM = 9" || paramCode == "DEFZRN = 1.1" || paramCode == "NAGZRN = 1" || paramCode == "STRPR = 0.02" || paramCode == "CENA = 15.9" || paramCode == "KOL = 1000") from $param,
+				QualityParamDTO( paramCode == "SUN" || paramCode == "SOJ" || paramCode == "UR") from $param,
 					init ( int count = 0; ),
 					action ( count++; ),
 					result ( count )
@@ -145,12 +145,12 @@ rule "Kukuruz (Napredak DOO Stara Pazova)"
         }else{
         	ver = $n/7.0*100.0;
         }
-		$var.getMostLikelyProduct().put("KNAPREDAK", ver);
+		$var.getMostLikelyProduct().put("IB", ver);
 		update($var);
 
 end
 
-rule "Kukuruz (Kozara DOO Banatsko Veliko Selo)"
+rule "Konzumna roba"
 	agenda-group "Product"
 	salience 10
 	no-loop true
@@ -159,7 +159,7 @@ rule "Kukuruz (Kozara DOO Banatsko Veliko Selo)"
         //conditions
         $var : QualityParamList($param : parametars)
         Number ( $n : intValue >= 3 ) from accumulate(
-				QualityParamDTO( paramCode == "VLK = 12" || paramCode == "LOM = 8" || paramCode == "DEFZRN = 2" || paramCode == "NAGZRN = 0.5" || paramCode == "STRPR = 0.15" || paramCode == "CENA = 16.1" || paramCode == "KOL = 2000") from $param,
+				QualityParamDTO( paramCode == "PB" || paramCode == "JSU" || paramCode == "SEK" || paramCode == "SEB" || paramCode == "SEKO") from $param,
 					init ( int count = 0; ),
 					action ( count++; ),
 					result ( count )
@@ -172,94 +172,13 @@ rule "Kukuruz (Kozara DOO Banatsko Veliko Selo)"
         }else{
         	ver = $n/7.0*100.0;
         }
-		$var.getMostLikelyProduct().put("KKOZARA", ver);
-		update($var);
-
-end
-
-rule "Jecam (Jedinstvo DOO Apatin)"
-	agenda-group "Product"
-	salience 10
-	no-loop true
-	lock-on-active true
-    when
-        //conditions
-        $var : QualityParamList($param : parametars)
-        Number ( $n : intValue >= 3 ) from accumulate(
-				QualityParamDTO( paramCode == "VLJ = 10" || paramCode == "HMJ = 82" || paramCode == "SDRZPRMILOM = 0.32" || paramCode == "SDRZSZ = 0.3" || paramCode == "SDRZPR = 10" || paramCode == "PZS = 0" || paramCode == "CENA = 16.10" || paramCode == "KOL = 10") from $param,
-					init ( int count = 0; ),
-					action ( count++; ),
-					result ( count )
-				)
-    then
-        //actions
-        double ver = 0;
-        if($n == 8){
-        	ver = 3000;
-        }else{
-        	ver = $n/8.0*100.0;
-        }
-		$var.getMostLikelyProduct().put("JJEDINSTVO", ver);
+		$var.getMostLikelyProduct().put("KONROB", ver);
 		update($var);
 
 end
 
 
-rule "Jecam (Napredak DOO Stara Pazova)"
-	agenda-group "Product"
-	salience 10
-	no-loop true
-	lock-on-active true
-    when
-        //conditions
-        $var : QualityParamList($param : parametars)
-        Number ( $n : intValue >= 3 ) from accumulate(
-				QualityParamDTO( paramCode == "VLJ = 10.5" || paramCode == "HMJ = 75" || paramCode == "SDRZPRMILOM = 1.41" || paramCode == "SDRZSZ = 0.35" || paramCode == "SDRZPR = 10" || paramCode == "PZS = 0" || paramCode == "CENA = 16.50" || paramCode == "KOL = 69") from $param,
-					init ( int count = 0; ),
-					action ( count++; ),
-					result ( count )
-				)
-    then
-        //actions
-        double ver = 0;
-        if($n == 8){
-        	ver = 3000;
-        }else{
-        	ver = $n/8.0*100.0;
-        }
-		$var.getMostLikelyProduct().put("JNAPREDAK", ver);
-		update($var);
-
-end
-
-rule "Jecam (Kozara DOO Banatsko Veliko Selo)"
-	agenda-group "Product"
-	salience 10
-	no-loop true
-	lock-on-active true
-    when
-        //conditions
-        $var : QualityParamList($param : parametars)
-        Number ( $n : intValue >= 3 ) from accumulate(
-				QualityParamDTO( paramCode == "VLJ = 9" || paramCode == "HMJ = 78" || paramCode == "SDRZPRMILOM = 2.5" || paramCode == "SDRZSZ = 0.81" || paramCode == "SDRZPR = 9.62" || paramCode == "PZS = 0" || paramCode == "CENA = 15.99" || paramCode == "KOL = 158") from $param,
-					init ( int count = 0; ),
-					action ( count++; ),
-					result ( count )
-				)
-    then
-        //actions
-        double ver = 0;
-        if($n == 8){
-        	ver = 3000;
-        }else{
-        	ver = $n/8.0*100.0;
-        }
-		$var.getMostLikelyProduct().put("JKOZARA", ver);
-		update($var);
-
-end
-
-rule "Psenica I klase"
+rule "Zitarice i industrijsko bilje standardi"
 	agenda-group "Product"
 	salience 20 //Proizvodi druge grupe imaju prioritet jer 100% zadovoljavaju standarde
 	no-loop true
@@ -267,69 +186,13 @@ rule "Psenica I klase"
 	when
 		$var : QualityParamList($param : parametars)
 		Number ( $n : intValue == 4) from accumulate(
-			QualityParamDTO( paramCode == "VLI = 13" || paramCode == "HMI = 76" || paramCode == "SDRZPRI = 13" || paramCode == "PRIMESEI = 2") from $param,
+			QualityParamDTO( paramCode == "VL = 10" || paramCode == "HM = 100" || paramCode == "PRIMESE = 2") from $param,
 				init ( int count = 0; ),
 				action ( count++; ),
 				result ( count )
 			)
 	then
-		$var.getMostLikelyProduct().put("PIKLASE" , 5000.00);
+		$var.getMostLikelyProduct().put("ZIBSTAN" , 5000.00);
 		update($var);
 end
 		
-rule "Psenica II klase"
-	agenda-group "Product"
-	salience 20 //Proizvodi druge grupe imaju prioritet jer 100% zadovoljavaju standarde
-	no-loop true
-	lock-on-active true
-	when
-		$var : QualityParamList($param : parametars)
-		Number ( $n : intValue == 4) from accumulate(
-			QualityParamDTO( paramCode == "VLII = 13" || paramCode == "HMII = 76" || paramCode == "SDRZPRII = 12" || paramCode == "PRIMESEII = 2") from $param,
-				init ( int count = 0; ),
-				action ( count++; ),
-				result ( count )
-			)
-	then
-		$var.getMostLikelyProduct().put("PIIKLASE" , 5000.00);
-		update($var);
-end
-
-
-rule "Psenica III klase"
-	agenda-group "Product"
-	salience 20 //Proizvodi druge grupe imaju prioritet jer 100% zadovoljavaju standarde
-	no-loop true
-	lock-on-active true
-	when
-		$var : QualityParamList($param : parametars)
-		Number ( $n : intValue == 4) from accumulate(
-			QualityParamDTO( paramCode == "VLIII = 13" || paramCode == "HMIII = 76" || paramCode == "SDRZPRIII = 11.5" || paramCode == "PRIMESEIII = 2") from $param,
-				init ( int count = 0; ),
-				action ( count++; ),
-				result ( count )
-			)
-	then
-		$var.getMostLikelyProduct().put("PIIIKLASE" , 5000.00);
-		update($var);
-		
-end
-
-	
-rule "Psenica IV klase"
-	agenda-group "Product"
-	salience 20 //Proizvodi druge grupe imaju prioritet jer 100% zadovoljavaju standarde
-	no-loop true
-	lock-on-active true
-	when
-		$var : QualityParamList($param : parametars)
-		Number ( $n : intValue == 4) from accumulate(
-			QualityParamDTO( paramCode == "VLIV = 13" || paramCode == "HMIV = 76" || paramCode == "SDRZPRIV = 10.5" || paramCode == "PRIMESEIV = 2") from $param,
-				init ( int count = 0; ),
-				action ( count++; ),
-				result ( count )
-			)
-	then
-		$var.getMostLikelyProduct().put("PIVKLASE" , 5000.00);
-		update($var);
-end

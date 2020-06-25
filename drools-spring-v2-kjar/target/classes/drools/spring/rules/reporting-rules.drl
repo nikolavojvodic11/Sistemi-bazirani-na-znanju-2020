@@ -1,0 +1,82 @@
+//created on: 24.06.2020.
+package rules
+
+//list any import classes here.
+import com.sbnz.berza.util.ReportEntity;
+import com.sbnz.berza.DTO.OfferReport;
+import com.sbnz.berza.DTO.SaleReport;
+import com.sbnz.berza.DTO.BrokerDTO;
+
+
+
+//declare any global variables here
+
+global java.utill.Date.zadovoljanLimit;
+global java.utill.Date zrnoLimit;
+global java.utill.Date zaduzenjeLimit;
+
+
+
+rule "Kupci koji su zadovoljni poslom"
+	lock-on-active true
+	no-loop true
+	agenda-group "ZadovoljanKupac"
+	
+    when
+    	
+    	$izv: ReportEntity($proizvod: products , $kupci: buyers , $prodaje: sales )
+    	$dto: BuyerDTO( $kup: buyerID ) from $kupci
+    	Number ( $n : intValue > 2 ) from accumulate (
+    		$sal: SaleReport( $broker: userID , isplaceno == 0 && saleDate.getTime() >= zadovoljanLimit.getTime()) from $prodaje ,
+    		init(int count = 0;),
+    		action(count++; $izv.getBrokeri().add($broker)),
+    		result(count)
+    	)
+    		
+    then
+        $izv.getRetVal().add($dto.getBuyerID())
+
+end
+
+rule "Kupac koji kupuje zrnaste proizvode"
+	lock-on-active true
+	no-loop true
+	agenda-group "ZrnastiKupac"
+	
+    when
+    	$izv: ReportEntity( $kupci: buyers , $proizvod: products )
+    	$dto: BuyerDTO( $kupac: buyerID ) from kupci
+    	Number ( $n: intValue > 3 ) from accumulate (
+    		$sal: SaleReport( $broker: userID , productCode == 'ZITARICE' && saleDate.getTime() >= zrnoLimit.getTime()) from $proizvod ,
+    		init( int count = 0; ),
+    		action(count++;),
+    		result(count)
+    	)
+    	
+    then
+       $izv.getRetVal().add($dto.getBuyerID());
+
+end
+
+
+rule "Kupac koji ima dugovanja"
+	lock-on-active true
+	no-loop true
+	agenda-group "DuzniKupac"
+	
+	when
+		$izv: ReportEntity( $kupci: buyers , $prodaje: sales)
+		$dto: BuyerDTO( $kupac: buyerID ) from kupci
+		Number( $n: intVal > 0) from accumulate (
+			$sal: SaleReport( $broker: userID , isplaceno !=0 && saleDate.getTime() >= zaduzenjeLimit.getTime()) from $prodaje ,
+			init( int count = 0; ),
+    		action(count++;),
+    		result(count)
+    	)
+    then
+    	$izv.getRetVal().add($dto.getBuyerID());
+
+end
+			
+			
+		

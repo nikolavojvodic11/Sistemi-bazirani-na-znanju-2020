@@ -6,17 +6,23 @@ public class BuyerDTO {
 	private long userID;
 	private String buyerName;
 	private String buyerSurName;
+	private int prviPutDolazi;
+	private int duzan;
+	private long accID;
 	
 	public BuyerDTO() {
 		
 	}
 
-	public BuyerDTO(long buyerID, long userID, String buyerName, String buyerSurName) {
+	public BuyerDTO(long buyerID, long userID, String buyerName, String buyerSurName, int prviPutDolazi , int duzan , long accID) {
 		super();
 		this.buyerID = buyerID;
 		this.userID = userID;
 		this.buyerName = buyerName;
 		this.buyerSurName = buyerSurName;
+		this.prviPutDolazi = prviPutDolazi;
+		this.duzan = duzan;
+		this.accID = accID;
 	}
 
 	public long getBuyerID() {
@@ -49,6 +55,30 @@ public class BuyerDTO {
 
 	public void setBuyerSurName(String buyerSurName) {
 		this.buyerSurName = buyerSurName;
+	}
+
+	public int getPrviPutDolazi() {
+		return prviPutDolazi;
+	}
+
+	public void setPrviPutDolazi(int prviPutDolazi) {
+		this.prviPutDolazi = prviPutDolazi;
+	}
+
+	public int getDuzan() {
+		return duzan;
+	}
+
+	public void setDuzan(int duzan) {
+		this.duzan = duzan;
+	}
+
+	public long getAccID() {
+		return accID;
+	}
+
+	public void setAccID(long accID) {
+		this.accID = accID;
 	}
 	
 	

@@ -1,0 +1,161 @@
+//created on: 24.06.2020.
+package rules
+
+//list any import classes here.
+import com.sbnz.berza.model.Buyer;
+import com.sbnz.beza.DTO.BuyerDTO;
+import com.sbnz.berza.model.BuyerAccount;
+import com.sbnz.berza.model.Product;
+import com.sbnz.berza.DTO.BuyerAccountDTO;
+import com.sbnz.berza.DTO.ProductDTO;
+import com.sbnz.berza.model.User;
+import com.sbnz.berza.DTO.UserDTO;
+
+
+
+//declare any global variables here
+
+
+
+
+rule "Kupac prvi put dolazi"
+	agenda-group "Kupac je validan"
+
+    when
+    	$var: Buyer( $id: buyerID )
+    	Number( $n: intValue > 0) from accumulate (
+    		BuyerDTO( $id == buyerID , $ppd: prviPutDolazi)
+    		init(int count = 0;),
+    		action(count++;),
+    		result(count)
+    	)
+    then
+        System.out.println("Kupac prvi put dolazi.");
+
+end
+
+rule "Kupac nije duzan"
+	agenda-group "Kupac je validan"
+	
+    when
+		$var: Buyer( $id: buyerID )
+    	Number( $n: intValue > 0) from accumulate (
+    		BuyerDTO( $id == buyerID , $du: duzan )
+    		init(int count = 0;),
+    		action(count++;),
+    		result(count)
+    	)
+    then
+    	System.out.println("Kupac ima zaduzenja!");
+    	
+end
+
+rule "Proizvod zadovoljava standarde"
+	agenda-group "Proizvod je validan"
+	
+	when
+	
+		$var: Product( $id: productID )
+		Number( $n: intValue > 0 ) from accumulate(
+			ProductDTO( $id == productID , $zad: zadvoljavaStandarde )
+			init(int count = 0;),
+    		action(count++;),
+    		result(count)
+    	)
+    then
+    	System.out.println("Proizvod ne zadovoljava standarde!");
+end
+
+rule "Proizvod dolazi od puzdanog proizvodjaca"
+	agenda-group "Proizvod je validan"
+	
+	when
+	
+		$var: Product( $id: productID )
+		Number( $n: intValue > 0 ) from accumulate(
+			ProductDTO( $id == productID , $pp: pouzdanProizvodjac )
+			init(int count = 0;),
+    		action(count++;),
+    		result(count)
+    	)
+    then
+    	System.out.println("Proizvodjac nije pouzdan!");
+end
+
+rule "Proizvod je prosao analizu"
+	agenda-group "Proizvod je validan"
+	
+	when
+	
+		$var: Product( $id: productID )
+		Number( $n: intValue > 0 ) from accumulate(
+			ProductDTO( $id == productID , $pa: prosaoAnalizu )
+			init(int count = 0;),
+    		action(count++;),
+    		result(count)
+    	)
+    then
+    	System.out.println("Proizvod nije prosao analizu!");
+end
+
+rule "Kupac ima otvoren nalog"
+	agenda-group "Otvaranje transakcije"
+	
+	when
+		$var: Buyer( $id: accID )
+		Number( $n: intValue > 0 ) from accumulate(
+			BuyerAccountDTO( $id == buyerID , $ac: accActive)
+			init(int count = 0;),
+    		action(count++;),
+    		result(count)
+    	)
+    then
+    	System.out.println("Kupac nema nalog!");
+ end
+ 
+ rule "Kupac ima otvoren nalog"
+	agenda-group "Otvaranje transakcije"
+	
+	when
+		$var: Buyer( $id: accID )
+		Number( $n: intValue > 0 ) from accumulate(
+			BuyerAccountDTO( $id == baID , $val: validan)
+			init(int count = 0;),
+    		action(count++;),
+    		result(count)
+    	)
+    then
+    	System.out.println("Nalog nije validan!");
+ end
+ 
+ rule "Broker je zaposen u kompaniji"
+ 	agenda-group "Broker je validan"
+ 	
+ 	when
+ 		$var: User( $id: userID )
+ 		Number( $n: int > 0 ) from accumulate(
+ 			UserDTO( $id == userID , userType == 'B' , $za: zaposeln )
+ 			init(int count = 0;),
+    		action(count++;),
+    		result(count)
+    	)
+    then
+    	System.outprintln("Broker nije zaposlen u kompaniji");
+    	
+end
+
+ rule "Broker je realizovao sve poslove"
+ 	agenda-group "Broker je validan"
+ 	
+ 	when
+ 		$var: User( $id: userID )
+ 		Number( $n: int > 0 ) from accumulate(
+ 			UserDTO( $id == userID , userType == 'B' , $ps: prodaoSve )
+ 			init(int count = 0;),
+    		action(count++;),
+    		result(count)
+    	)
+    then
+    	System.outprintln("Broker nije zakljucio sve poslove do kraja");
+    	
+end

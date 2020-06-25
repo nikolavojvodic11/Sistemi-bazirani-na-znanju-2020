@@ -5,16 +5,17 @@ public class FalseProduct {
 	
 	private Long fpID;
 	private Product product;
-	private QualityParam qp;
+	private Buyer buyer;
 	
 	public FalseProduct() {
 		
 	}
 	
-	public FalseProduct(Product product , QualityParam qp)
+	public FalseProduct(Product product , Buyer buyer)
 	{
 		this.product = product;
-		this.qp = qp;
+		this.buyer = buyer;
+		
 	}
 
 	public Long getFpID() {
@@ -33,13 +34,15 @@ public class FalseProduct {
 		this.product = product;
 	}
 
-	public QualityParam getQp() {
-		return qp;
+	public Buyer getBuyer() {
+		return buyer;
 	}
 
-	public void setQp(QualityParam qp) {
-		this.qp = qp;
+	public void setBuyer(Buyer buyer) {
+		this.buyer = buyer;
 	}
+	
+	
 	
 	
 

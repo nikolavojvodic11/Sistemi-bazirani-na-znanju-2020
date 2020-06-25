@@ -1,0 +1,97 @@
+//created on: 24.06.2020.
+package rules
+
+//list any import classes here.
+
+import com.sbnz.berza.monitoring.LaboratorijskaAnaliza;
+import com.sbnz.berza.monitoring.LaboratorijskaProblemSkaldistenja;
+import com.sbnz.berza.monitoring.ProductModel;
+
+
+
+//declare any global variables here
+
+
+
+
+
+rule "Masti i Lipidi"
+	agenda-group "Laboratorijska Analiza"
+    when
+        $var : ProductModel( $id: productID)
+        Number( $n: doubleValue > 36.0 || $n: doubleValue < 21.0) from accumulate(
+        	LaboratorijskaAnaliza( productID == $id , $pmu: procenatMastiUpper , $pml: procenatMastiLower)
+        	init(int count = 0;),
+    		action(count++;),
+    		result(count)
+        )
+        
+    then
+        System.out.println("Procenat masti i lipida u zrnu nije prosao kontorlu!");
+
+end
+
+rule "Belancevine"
+	agenda-group "Laboratorijska Analiza"
+
+    when
+        $var : ProductModel( $id: productID)
+        Number( $n: doubleValue > 19.1 || $n: doubleValue < 10.5) from accumulate(
+        	LaboratorijskaAnaliza( productID = $id , $pbu: procenatBelancevinaUpper , $pbl: procenatBelancevinaLower)
+        	init(int count = 0;),
+    		action(count++;),
+    		result(count)
+        )
+    then
+        System.out.println("Procenat belancevina u zrnu nije prosao kontorlu!");
+
+end
+
+rule "Voda"
+	agenda-group "Laboratorijska Analiza"
+
+    when
+        $var : ProductModel( $id: productID)
+        Number( $n: doubleValue > 12.9 || $n: doubleValue < 6.4) from accumulate(
+        	LaboratorijskaAnaliza( productID = $id , $pvu: procenatVodeUpper , $pvl: procenatVodeLower)
+        	init(int count = 0;),
+    		action(count++;),
+    		result(count)
+        )
+    then
+        System.out.println("Procenat vode u zrnu nije prosao kontorlu!");
+
+end
+
+
+rule "Temperatura"
+	agenda-group "Problem Skladistenja"
+
+    when
+        $var : ProductModel( $id: productID)
+        Number( $n: intValue > 35) from accumulate(
+        	ProblemSkladistenja( productID = $id , $temp: temperatura)
+        	init(int count = 0;),
+    		action(count++;),
+    		result(count)
+        )
+    then
+        System.out.println("Proizvod se skladisti na temperaturi vecoj od 35 stepeni!");
+
+end
+
+rule "Dani"
+	agenda-group "Problem Skladistenja"
+
+    when
+        $var : ProductModel( $id: productID)
+        Number( $n: intValue > 60 || $n: intValue < 30) from accumulate(
+        	ProblemSkladistenja( productID = $id , $du: daniUpper , $dl: daniLower)
+        	init(int count = 0;),
+    		action(count++;),
+    		result(count)
+        )
+    then
+        System.out.println("Proizvod se nije skladistio u dozvoljenom vremenu!");
+
+end

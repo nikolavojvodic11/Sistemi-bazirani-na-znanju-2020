@@ -10,6 +10,9 @@ public class Product {
 	private String productName;
 	private String productCode;
 	private Set<ProductQualityParam> pqp = new HashSet<ProductQualityParam>(0);
+	private int zadovoljavaStandarde;
+	private int pouzdanProizvodjac;
+	private int prosaoAnalizu;
 	
 	public Product() {
 		
@@ -58,6 +61,41 @@ public class Product {
 
 	public void setPqp(Set<ProductQualityParam> pqp) {
 		this.pqp = pqp;
+	}
+
+	public Product(String productName, String productCode, Set<ProductQualityParam> pqp, int zadovoljavaStandarde,
+			int pouzdanProizvodjac, int prosaoAnalizu) {
+		super();
+		this.productName = productName;
+		this.productCode = productCode;
+		this.pqp = pqp;
+		this.zadovoljavaStandarde = zadovoljavaStandarde;
+		this.pouzdanProizvodjac = pouzdanProizvodjac;
+		this.prosaoAnalizu = prosaoAnalizu;
+	}
+
+	public int getZadovoljavaStandarde() {
+		return zadovoljavaStandarde;
+	}
+
+	public void setZadovoljavaStandarde(int zadovoljavaStandarde) {
+		this.zadovoljavaStandarde = zadovoljavaStandarde;
+	}
+
+	public int getPouzdanProizvodjac() {
+		return pouzdanProizvodjac;
+	}
+
+	public void setPouzdanProizvodjac(int pouzdanProizvodjac) {
+		this.pouzdanProizvodjac = pouzdanProizvodjac;
+	}
+
+	public int getProsaoAnalizu() {
+		return prosaoAnalizu;
+	}
+
+	public void setProsaoAnalizu(int prosaoAnalizu) {
+		this.prosaoAnalizu = prosaoAnalizu;
 	}
 	
 	

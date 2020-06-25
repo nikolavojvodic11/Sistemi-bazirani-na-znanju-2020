@@ -8,6 +8,8 @@ public class UserDTO {
 	private String userUsername;
 	private String userPassword;
 	private char userType;
+	private int zaposlen;
+	private int prodaoSve;
 	
 	public UserDTO() {
 		
@@ -24,6 +26,20 @@ public class UserDTO {
 		this.userType = userType;
 		
 	}
+
+	public UserDTO(long userID, String userName, String userSurname, String userUsername, String userPassword,
+			char userType, int zaposlen, int prodaoSve) {
+		super();
+		this.userID = userID;
+		this.userName = userName;
+		this.userSurname = userSurname;
+		this.userUsername = userUsername;
+		this.userPassword = userPassword;
+		this.userType = userType;
+		this.zaposlen = zaposlen;
+		this.prodaoSve = prodaoSve;
+	}
+
 
 	public long getUserID() {
 		return userID;
@@ -71,6 +87,26 @@ public class UserDTO {
 
 	public void setUserType(char userType) {
 		this.userType = userType;
+	}
+
+
+	public int getZaposlen() {
+		return zaposlen;
+	}
+
+
+	public void setZaposlen(int zaposlen) {
+		this.zaposlen = zaposlen;
+	}
+
+
+	public int getProdaoSve() {
+		return prodaoSve;
+	}
+
+
+	public void setProdaoSve(int prodaoSve) {
+		this.prodaoSve = prodaoSve;
 	}
 	
 	
