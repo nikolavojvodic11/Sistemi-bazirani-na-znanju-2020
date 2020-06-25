@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated Jun 26, 2020 12:06:04 AM by Hibernate Tools 5.2.12.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="sbnz" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.sbnz.berza.xml.Buyer" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="buyer">
+        <id name="buyerId" type="java.lang.Long">
+            <column name="BUYER_ID"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one class="com.sbnz.berza.xml.Buyeraccount" embed-xml="true" fetch="select" insert="true" name="buyeraccount" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="BUYER_ACCOUNT_ID"/>
+        </many-to-one>
+        <property generated="never" lazy="false" name="buyerName" optimistic-lock="true" type="string" unique="false">
+            <column length="100" name="BUYER_NAME" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="buyerSurname" optimistic-lock="true" type="string" unique="false">
+            <column length="250" name="BUYER_SURNAME" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="zaduzenja" optimistic-lock="true" type="long" unique="false">
+            <column name="ZADUZENJA" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="prviPutDolazi" optimistic-lock="true" type="long" unique="false">
+            <column name="PRVI_PUT_DOLAZI" not-null="true"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="offers" optimistic-lock="true" sort="unsorted" table="offer">
+            <key on-delete="noaction">
+                <column name="BUYER_ID" not-null="true"/>
+            </key>
+            <one-to-many class="com.sbnz.berza.xml.Offer" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="falseproducts" optimistic-lock="true" sort="unsorted" table="falseproduct">
+            <key on-delete="noaction">
+                <column name="BUYER_ID" not-null="true"/>
+            </key>
+            <one-to-many class="com.sbnz.berza.xml.Falseproduct" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="buyeraccounts" optimistic-lock="true" sort="unsorted" table="buyeraccount">
+            <key on-delete="noaction">
+                <column name="BUYER_ID" not-null="true"/>
+            </key>
+            <one-to-many class="com.sbnz.berza.xml.Buyeraccount" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="sales" optimistic-lock="true" sort="unsorted" table="sale">
+            <key on-delete="noaction">
+                <column name="BUYER_ID" not-null="true"/>
+            </key>
+            <one-to-many class="com.sbnz.berza.xml.Sale" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>

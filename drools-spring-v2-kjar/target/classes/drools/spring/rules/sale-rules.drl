@@ -4,7 +4,7 @@ package rules
 //list any import classes here.
 import com.sbnz.berza.model.Buyer;
 import com.sbnz.beza.DTO.BuyerDTO;
-import com.sbnz.berza.model.BuyerAccount;
+import com.sbnz.berza.model.Buyeraccount;
 import com.sbnz.berza.model.Product;
 import com.sbnz.berza.DTO.BuyerAccountDTO;
 import com.sbnz.berza.DTO.ProductDTO;

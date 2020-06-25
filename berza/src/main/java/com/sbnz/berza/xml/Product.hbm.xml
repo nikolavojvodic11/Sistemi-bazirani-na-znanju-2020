@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated Jun 26, 2020 12:06:04 AM by Hibernate Tools 5.2.12.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="sbnz" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.sbnz.berza.xml.Product" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="product">
+        <id name="productId" type="java.lang.Long">
+            <column name="PRODUCT_ID"/>
+            <generator class="identity"/>
+        </id>
+        <property generated="never" lazy="false" name="productName" optimistic-lock="true" type="string" unique="false">
+            <column length="100" name="PRODUCT_NAME" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="productCode" optimistic-lock="true" type="string" unique="false">
+            <column length="10" name="PRODUCT_CODE" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="zadovoljavaStandarde" optimistic-lock="true" type="long" unique="false">
+            <column name="ZADOVOLJAVA_STANDARDE" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="pouzdanProizvodjac" optimistic-lock="true" type="long" unique="false">
+            <column name="POUZDAN_PROIZVODJAC" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="prosaoAnalizu" optimistic-lock="true" type="long" unique="false">
+            <column name="PROSAO_ANALIZU" not-null="true"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="offers" optimistic-lock="true" sort="unsorted" table="offer">
+            <key on-delete="noaction">
+                <column name="PRODUCT_ID" not-null="true"/>
+            </key>
+            <one-to-many class="com.sbnz.berza.xml.Offer" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="falseproducts" optimistic-lock="true" sort="unsorted" table="falseproduct">
+            <key on-delete="noaction">
+                <column name="PRODUCT_ID" not-null="true"/>
+            </key>
+            <one-to-many class="com.sbnz.berza.xml.Falseproduct" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="sales" optimistic-lock="true" sort="unsorted" table="sale">
+            <key on-delete="noaction">
+                <column name="PRODUCT_ID" not-null="true"/>
+            </key>
+            <one-to-many class="com.sbnz.berza.xml.Sale" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="productqualityparams" optimistic-lock="true" sort="unsorted" table="productqualityparam">
+            <key on-delete="noaction">
+                <column name="PRODUCT_ID" not-null="true"/>
+            </key>
+            <one-to-many class="com.sbnz.berza.xml.Productqualityparam" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>

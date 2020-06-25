@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated Jun 26, 2020 12:06:04 AM by Hibernate Tools 5.2.12.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="sbnz" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.sbnz.berza.xml.Buyeraccount" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="buyeraccount">
+        <id name="buyerAccountId" type="java.lang.Long">
+            <column name="BUYER_ACCOUNT_ID"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one class="com.sbnz.berza.xml.Buyer" embed-xml="true" fetch="select" insert="true" name="buyer" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="BUYER_ID" not-null="true"/>
+        </many-to-one>
+        <property generated="never" lazy="false" name="active" optimistic-lock="true" type="long" unique="false">
+            <column name="ACTIVE" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="valid" optimistic-lock="true" type="long" unique="false">
+            <column name="VALID" not-null="true"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="buyers" optimistic-lock="true" sort="unsorted" table="buyer">
+            <key on-delete="noaction">
+                <column name="BUYER_ACCOUNT_ID"/>
+            </key>
+            <one-to-many class="com.sbnz.berza.xml.Buyer" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>
