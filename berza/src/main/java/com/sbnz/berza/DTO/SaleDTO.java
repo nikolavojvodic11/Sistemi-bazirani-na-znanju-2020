@@ -94,6 +94,14 @@ public class SaleDTO {
 	public void setSaleDate(Date saleDate) {
 		this.saleDate = saleDate;
 	}
+
+	public String getBuyerName() {
+		return buyerName;
+	}
+
+	public void setBuyerName(String buyerName) {
+		this.buyerName = buyerName;
+	}
 	
 	
 	

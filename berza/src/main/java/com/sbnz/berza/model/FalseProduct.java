@@ -21,6 +21,7 @@ public class Falseproduct implements java.io.Serializable {
 	private Long fpId;
 	private Buyer buyer;
 	private Product product;
+	private Qualityparam qp;
 
 	public Falseproduct() {
 	}
@@ -61,5 +62,17 @@ public class Falseproduct implements java.io.Serializable {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
+
+	public Qualityparam getQp() {
+		return qp;
+	}
+
+	public void setQp(Qualityparam qp) {
+		this.qp = qp;
+	}
+	
+	
+	
+	
 
 }

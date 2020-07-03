@@ -5,21 +5,23 @@ public class FalseProductDTO {
 	private long fpID;
 	private long qpID;
 	private long productID;
+	private long buyerID;
 	private String qpName;
 	private String productName;
 	
 	
-	private FalseProductDTO() {
+	public FalseProductDTO() {
 		
 	}
 	
-	private FalseProductDTO(long fpID , long qpID , long productID , String qpName , String productName)
+	public FalseProductDTO(long fpID , long qpID , long productID ,long buyerID , String qpName , String productName)
 	{
 		super();
 		
 		this.fpID = fpID;
 		this.qpID = qpID;
 		this.productID = productID;
+		this.buyerID = buyerID;
 		this.qpName = qpName;
 		this.productName = productName;
 		
@@ -63,6 +65,14 @@ public class FalseProductDTO {
 
 	public void setProductName(String productName) {
 		this.productName = productName;
+	}
+
+	public long getBuyerID() {
+		return buyerID;
+	}
+
+	public void setBuyerID(long buyerID) {
+		this.buyerID = buyerID;
 	}
 	
 	
