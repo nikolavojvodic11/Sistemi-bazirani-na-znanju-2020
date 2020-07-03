@@ -5,12 +5,12 @@ import java.util.List;
 import com.sbnz.berza.DTO.MyOfferDTO;
 import com.sbnz.berza.DTO.OfferDTO;
 import com.sbnz.berza.DTO.OfferReport;
-import com.sbnz.berza.model.User;
+import com.sbnz.berza.DTO.UserDTO;
 
 public interface OfferServiceInterface extends ServiceInterface<OfferDTO> {
 	
 	
-	public List<MyOfferDTO> getOffer(User u);
+	public List<MyOfferDTO> getOffer(UserDTO u);
 	
 	public boolean boughtZitarice(long buyer);
 	public boolean boughtKomponenteStocneHrane(long buyer);

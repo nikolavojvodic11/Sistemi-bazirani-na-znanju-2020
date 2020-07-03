@@ -17,4 +17,6 @@ public interface FalseProductRepository extends JpaRepository<Falseproduct , Lon
 	
 	public List<Falseproduct> findByBuyer(Buyer b);
 	
+	public List<Falseproduct> findByQualityparam(Qualityparam qp);
+	
 }
