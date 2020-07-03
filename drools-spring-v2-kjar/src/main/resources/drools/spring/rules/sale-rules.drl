@@ -25,9 +25,7 @@ rule "Kupac prvi put dolazi"
     	$var: Buyer( $id: buyerID )
     	Number( $n: intValue > 0) from accumulate (
     		BuyerDTO( $id == buyerID , $ppd: prviPutDolazi)
-    		init(int count = 0;),
-    		action(count++;),
-    		result(count)
+    		count($ppd)
     	)
     then
         System.out.println("Kupac prvi put dolazi.");
@@ -41,9 +39,7 @@ rule "Kupac nije duzan"
 		$var: Buyer( $id: buyerID )
     	Number( $n: intValue > 0) from accumulate (
     		BuyerDTO( $id == buyerID , $du: duzan )
-    		init(int count = 0;),
-    		action(count++;),
-    		result(count)
+    		count($du)
     	)
     then
     	System.out.println("Kupac ima zaduzenja!");
@@ -58,9 +54,7 @@ rule "Proizvod zadovoljava standarde"
 		$var: Product( $id: productID )
 		Number( $n: intValue > 0 ) from accumulate(
 			ProductDTO( $id == productID , $zad: zadvoljavaStandarde )
-			init(int count = 0;),
-    		action(count++;),
-    		result(count)
+			count($zad)
     	)
     then
     	System.out.println("Proizvod ne zadovoljava standarde!");
@@ -74,9 +68,7 @@ rule "Proizvod dolazi od puzdanog proizvodjaca"
 		$var: Product( $id: productID )
 		Number( $n: intValue > 0 ) from accumulate(
 			ProductDTO( $id == productID , $pp: pouzdanProizvodjac )
-			init(int count = 0;),
-    		action(count++;),
-    		result(count)
+			count($pp)
     	)
     then
     	System.out.println("Proizvodjac nije pouzdan!");
@@ -90,9 +82,7 @@ rule "Proizvod je prosao analizu"
 		$var: Product( $id: productID )
 		Number( $n: intValue > 0 ) from accumulate(
 			ProductDTO( $id == productID , $pa: prosaoAnalizu )
-			init(int count = 0;),
-    		action(count++;),
-    		result(count)
+			count($pa)
     	)
     then
     	System.out.println("Proizvod nije prosao analizu!");
@@ -105,9 +95,7 @@ rule "Kupac ima otvoren nalog"
 		$var: Buyer( $id: accID )
 		Number( $n: intValue > 0 ) from accumulate(
 			BuyerAccountDTO( $id == buyerID , $ac: accActive)
-			init(int count = 0;),
-    		action(count++;),
-    		result(count)
+			count($ac)
     	)
     then
     	System.out.println("Kupac nema nalog!");
@@ -120,9 +108,7 @@ rule "Kupac ima otvoren nalog"
 		$var: Buyer( $id: accID )
 		Number( $n: intValue > 0 ) from accumulate(
 			BuyerAccountDTO( $id == baID , $val: validan)
-			init(int count = 0;),
-    		action(count++;),
-    		result(count)
+			count($val)
     	)
     then
     	System.out.println("Nalog nije validan!");
@@ -135,9 +121,7 @@ rule "Kupac ima otvoren nalog"
  		$var: User( $id: userID )
  		Number( $n: int > 0 ) from accumulate(
  			UserDTO( $id == userID , userType == 'B' , $za: zaposeln )
- 			init(int count = 0;),
-    		action(count++;),
-    		result(count)
+ 			count($za)
     	)
     then
     	System.outprintln("Broker nije zaposlen u kompaniji");
@@ -151,9 +135,7 @@ end
  		$var: User( $id: userID )
  		Number( $n: int > 0 ) from accumulate(
  			UserDTO( $id == userID , userType == 'B' , $ps: prodaoSve )
- 			init(int count = 0;),
-    		action(count++;),
-    		result(count)
+ 			count($ps)
     	)
     then
     	System.outprintln("Broker nije zakljucio sve poslove do kraja");

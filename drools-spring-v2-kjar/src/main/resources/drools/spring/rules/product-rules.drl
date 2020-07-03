@@ -21,10 +21,8 @@ rule "Zitarice"
         //conditions
         $var : QualityParamList($param : parametars)
         Number ( $n : intValue >= 3 ) from accumulate(
-				QualityParamDTO( paramCode == "PSENICA" || paramCode == "KUKURUZ" || paramCode == "JECAM" || paramCode == "OVAS" || paramCode == "RAZ") from $param,
-					init ( int count = 0; ),
-					action ( count++; ),
-					result ( count )
+				QualityParamDTO($pc: paramCode , paramCode == "PSENICA" || paramCode == "KUKURUZ" || paramCode == "JECAM" || paramCode == "OVAS" || paramCode == "RAZ") from $param,
+					count($pc)
 				)
     then
         //actions
@@ -48,10 +46,8 @@ rule "Komponente stocne hrane"
         //conditions
         $var : QualityParamList($param : parametars)
         Number ( $n : intValue >= 3 ) from accumulate(
-				QualityParamDTO( paramCode == "SS" || paramCode == "SUS" || paramCode == "PSB" || paramCode == "SJ" || paramCode == "RB" || paramCode == "LB" || paramCode == "SG") from $param,
-					init ( int count = 0; ),
-					action ( count++; ),
-					result ( count )
+				QualityParamDTO($pc: paramCode , paramCode == "SS" || paramCode == "SUS" || paramCode == "PSB" || paramCode == "SJ" || paramCode == "RB" || paramCode == "LB" || paramCode == "SG") from $param,
+					count($pc)
 				)
     then
         //actions
@@ -76,10 +72,8 @@ rule "Semenska roba"
         //conditions
         $var : QualityParamList($param : parametars)
         Number ( $n : intValue >= 3 ) from accumulate(
-				QualityParamDTO( paramCode == "SP" || paramCode == "SK" || paramCode == "SEJE") from $param,
-					init ( int count = 0; ),
-					action ( count++; ),
-					result ( count )
+				QualityParamDTO($pc: paramCode , paramCode == "SP" || paramCode == "SK" || paramCode == "SEJE") from $param,
+					count($pc)
 				)
     then
         //actions
@@ -105,10 +99,8 @@ rule "Mineralna djubriva"
         //conditions
         $var : QualityParamList($param : parametars)
         Number ( $n : intValue >= 3 ) from accumulate(
-				QualityParamDTO( paramCode == "NPK" || paramCode == "AN" || paramCode == "KAN" || paramCode == "UREA") from $param,
-					init ( int count = 0; ),
-					action ( count++; ),
-					result ( count )
+				QualityParamDTO($pc: paramCode , paramCode == "NPK" || paramCode == "AN" || paramCode == "KAN" || paramCode == "UREA") from $param,
+					count($pc)
 				)
     then
         //actions
@@ -132,10 +124,8 @@ rule "Industrijsko bilje"
         //conditions
         $var : QualityParamList($param : parametars)
         Number ( $n : intValue >= 3 ) from accumulate(
-				QualityParamDTO( paramCode == "SUN" || paramCode == "SOJ" || paramCode == "UR") from $param,
-					init ( int count = 0; ),
-					action ( count++; ),
-					result ( count )
+				QualityParamDTO($pc: paramCode , paramCode == "SUN" || paramCode == "SOJ" || paramCode == "UR") from $param,
+					count($pc)
 				)
     then
         //actions
@@ -159,10 +149,8 @@ rule "Konzumna roba"
         //conditions
         $var : QualityParamList($param : parametars)
         Number ( $n : intValue >= 3 ) from accumulate(
-				QualityParamDTO( paramCode == "PB" || paramCode == "JSU" || paramCode == "SEK" || paramCode == "SEB" || paramCode == "SEKO") from $param,
-					init ( int count = 0; ),
-					action ( count++; ),
-					result ( count )
+				QualityParamDTO($pc: paramCode , paramCode == "PB" || paramCode == "JSU" || paramCode == "SEK" || paramCode == "SEB" || paramCode == "SEKO") from $param,
+					count($pc)
 				)
     then
         //actions
@@ -186,10 +174,8 @@ rule "Zitarice i industrijsko bilje standardi"
 	when
 		$var : QualityParamList($param : parametars)
 		Number ( $n : intValue == 4) from accumulate(
-			QualityParamDTO( paramCode == "VL = 10" || paramCode == "HM = 100" || paramCode == "PRIMESE = 2") from $param,
-				init ( int count = 0; ),
-				action ( count++; ),
-				result ( count )
+			QualityParamDTO($pc: paramCode , paramCode == "VL = 10" || paramCode == "HM = 100" || paramCode == "PRIMESE = 2") from $param,
+				count($pc)
 			)
 	then
 		$var.getMostLikelyProduct().put("ZIBSTAN" , 5000.00);

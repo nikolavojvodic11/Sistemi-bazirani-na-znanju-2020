@@ -16,7 +16,7 @@ global java.utill.Date zrnoLimit;
 global java.utill.Date zaduzenjeLimit;
 
 
-
+/*
 rule "Kupci koji su zadovoljni poslom"
 	lock-on-active true
 	no-loop true
@@ -37,7 +37,35 @@ rule "Kupci koji su zadovoljni poslom"
         $izv.getRetVal().add($dto.getBuyerID())
 
 end
+*/
 
+rule "Kupci koji su zadovoljni poslom"
+	lock-on-active true
+	no-loop true
+	agenda-group "ZadovoljanKupac"
+	
+    when
+    	
+    	$izv: ReportEntity($proizvod: products , $kupci: buyers , $prodaje: sales )
+    	$dto: BuyerDTO( $kup: buyerID )
+    	$b : UserDTO( $us : userID ) 
+    	accumulate(
+    		$sal: SaleReport( $broker: userID , isplaceno == 0 && saleDate.getTime() >= zadovoljanLimit.getTime()) from $prodaje and
+    		List(size > 0) from collect(
+    			Broker(tip == UserType.Broker) from $b.getUserType()
+    		),
+    		
+    		$brokeri : collectList($broker)
+    	)
+    	eval($brokeri.size() >= 2)
+    then
+        $izv.getRetVal().add($dto.getBuyerID())
+
+end
+
+
+
+/*
 rule "Kupac koji kupuje zrnaste proizvode"
 	lock-on-active true
 	no-loop true
@@ -57,7 +85,33 @@ rule "Kupac koji kupuje zrnaste proizvode"
        $izv.getRetVal().add($dto.getBuyerID());
 
 end
+*/
 
+rule "Kupac koji kupuje zrnaste proizvode"
+	lock-on-active true
+	no-loop true
+	agenda-group "ZrnastiKupac"
+	
+    when
+    	$izv: ReportEntity( $kupci: buyers , $proizvod: products )
+    	$dto: BuyerDTO( $kupac: buyerID ) from $kupci
+    	$p : ProductDTO ($pr : productID ) from $proizvod
+    	accumulate(
+    		$sal: SaleReport( $pc : productCode , productCode == 'ZITARICE' && saleDate.getTime() >= zrnoLimit.getTime()) from $proizvod and
+    		List(size > 0) from collect(
+    			Proizvod(tip == TipProizvoda.Zitarice) from $p.getProductCode()
+    		),
+    		
+    		$proizvodi : collectList($pc)
+    	)
+    	eval($proizvodi.size() >= 3)
+    	
+    	)
+    	
+    then
+       $izv.getRetVal().add($dto.getBuyerID());
+
+end
 
 rule "Kupac koji ima dugovanja"
 	lock-on-active true

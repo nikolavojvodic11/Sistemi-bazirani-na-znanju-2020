@@ -15,15 +15,13 @@ import com.sbnz.berza.monitoring.ProductModel;
 
 
 
-rule "Masti i Lipidi"
+rule "Masti i Lipidi Upper"
 	agenda-group "Laboratorijska Analiza"
     when
         $var : ProductModel( $id: productID)
-        Number( $n: doubleValue > 36.0 || $n: doubleValue < 21.0) from accumulate(
-        	LaboratorijskaAnaliza( productID == $id , $pmu: procenatMastiUpper , $pml: procenatMastiLower)
-        	init(int count = 0;),
-    		action(count++;),
-    		result(count)
+        Number( $n: doubleValue > 36.0) from accumulate(
+        	LaboratorijskaAnaliza( $pid : productID , productID == $id , $pmu: procenatMastiUpper)
+        	count($pmu)
         )
         
     then
@@ -31,32 +29,70 @@ rule "Masti i Lipidi"
 
 end
 
-rule "Belancevine"
+rule "Masti i Lipidi Lower"
+	agenda-group "Laboratorijska Analiza"
+    when
+        $var : ProductModel( $id: productID)
+        Number( $n: doubleValue < 21.0) from accumulate(
+        	LaboratorijskaAnaliza( $pid : productID , productID == $id , $pml: procenatMastiLower)
+        	count($pml)
+        )
+        
+    then
+        System.out.println("Procenat masti i lipida u zrnu nije prosao kontorlu!");
+
+end
+
+rule "Belancevine Upper"
 	agenda-group "Laboratorijska Analiza"
 
     when
         $var : ProductModel( $id: productID)
-        Number( $n: doubleValue > 19.1 || $n: doubleValue < 10.5) from accumulate(
-        	LaboratorijskaAnaliza( productID = $id , $pbu: procenatBelancevinaUpper , $pbl: procenatBelancevinaLower)
-        	init(int count = 0;),
-    		action(count++;),
-    		result(count)
+        Number( $n: doubleValue > 19.1) from accumulate(
+        	LaboratorijskaAnaliza( $pid : productID , productID = $id , $pbu: procenatBelancevinaUpper)
+        	count($pbu)
         )
     then
         System.out.println("Procenat belancevina u zrnu nije prosao kontorlu!");
 
 end
 
-rule "Voda"
+rule "Belancevine Lower"
 	agenda-group "Laboratorijska Analiza"
 
     when
         $var : ProductModel( $id: productID)
-        Number( $n: doubleValue > 12.9 || $n: doubleValue < 6.4) from accumulate(
-        	LaboratorijskaAnaliza( productID = $id , $pvu: procenatVodeUpper , $pvl: procenatVodeLower)
-        	init(int count = 0;),
-    		action(count++;),
-    		result(count)
+        Number( $n: doubleValue < 10.5) from accumulate(
+        	LaboratorijskaAnaliza( $pid : productID , productID = $id , $pbl: procenatBelancevinaLower)
+        	count($pbl)
+        )
+    then
+        System.out.println("Procenat belancevina u zrnu nije prosao kontorlu!");
+
+end
+
+rule "Voda Upper"
+	agenda-group "Laboratorijska Analiza"
+
+    when
+        $var : ProductModel( $id: productID)
+        Number( $n: doubleValue > 12.9 ) from accumulate(
+        	LaboratorijskaAnaliza( $pid : productID , productID = $id , $pvu: procenatVodeUpper)
+        	count($pvu)
+        )
+    then
+        System.out.println("Procenat vode u zrnu nije prosao kontorlu!");
+
+end
+
+rule "Voda Lower"
+	agenda-group "Laboratorijska Analiza"
+
+    when
+        $var : ProductModel( $id: productID)
+        Number( $n: doubleValue < 6.4) from accumulate(
+        	LaboratorijskaAnaliza( $pid : productID , productID = $id , $pvl: procenatVodeLower)
+        	count($pvl)
         )
     then
         System.out.println("Procenat vode u zrnu nije prosao kontorlu!");
@@ -70,26 +106,37 @@ rule "Temperatura"
     when
         $var : ProductModel( $id: productID)
         Number( $n: intValue > 35) from accumulate(
-        	ProblemSkladistenja( productID = $id , $temp: temperatura)
-        	init(int count = 0;),
-    		action(count++;),
-    		result(count)
+        	ProblemSkladistenja( $pid : productID , productID = $id , $temp: temperatura)
+        	count($temp)
         )
     then
         System.out.println("Proizvod se skladisti na temperaturi vecoj od 35 stepeni!");
 
 end
 
-rule "Dani"
+
+rule "Dani Upper"
 	agenda-group "Problem Skladistenja"
 
     when
         $var : ProductModel( $id: productID)
-        Number( $n: intValue > 60 || $n: intValue < 30) from accumulate(
-        	ProblemSkladistenja( productID = $id , $du: daniUpper , $dl: daniLower)
-        	init(int count = 0;),
-    		action(count++;),
-    		result(count)
+        Number( $n: intValue > 60 ) from accumulate(
+        	ProblemSkladistenja( $pid : productID , productID = $id , $du: daniUpper)
+        	count($du)
+        )
+    then
+        System.out.println("Proizvod se nije skladistio u dozvoljenom vremenu!");
+
+end
+
+rule "Dani Lower"
+	agenda-group "Problem Skladistenja"
+
+    when
+        $var : ProductModel( $id: productID)
+        Number( $n: intValue < 30) from accumulate(
+        	ProblemSkladistenja( $pid : productID , productID = $id , $dl: daniLower)
+        	count($dl)
         )
     then
         System.out.println("Proizvod se nije skladistio u dozvoljenom vremenu!");
